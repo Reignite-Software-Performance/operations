@@ -1,0 +1,8 @@
+name: operations
+type: backend
+language: csharp
+runtime: dotnet
+cloud: azure
+defaultBranch: main
+ghOrg: Reignite-Software-Performance
+created: '2026-03-23T02:36:28.298Z'
