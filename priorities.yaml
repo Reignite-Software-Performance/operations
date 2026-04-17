@@ -1,0 +1,51 @@
+level: project
+generatedAt: '2026-04-17T22:47:28.721Z'
+model: haiku
+items:
+  - id: core-data-entities
+    title: Define Core Operations Data Model
+    reason: >-
+      Foundational; all features depend on consistent business entity
+      definitions
+    justification: Rank 1 - must precede all integration and workflow work
+    suggestedAction: Build entities for orders, inventory, workflows, agents; use DDD
+    rank: 1
+    status: pending
+    createdAt: '2026-04-17T22:47:28.721Z'
+    updatedAt: '2026-04-17T22:47:28.721Z'
+  - id: saas-integration-framework
+    title: Create Integration Adapter Pattern & Base
+    reason: Unblocks parallel SaaS connector development (accounting, CRM, etc.)
+    justification: Rank 2 - depends on data model; critical for operations scope
+    suggestedAction: Pattern for auth, retry, rate-limit, error handling, state sync
+    rank: 2
+    status: pending
+    createdAt: '2026-04-17T22:47:28.721Z'
+    updatedAt: '2026-04-17T22:47:28.721Z'
+  - id: workflow-orchestration-engine
+    title: Build Workflow Engine with Act-First Support
+    reason: Core to Automaton's act-first design; enables agent orchestration
+    justification: Rank 3 - depends on data model; blocks agent team deployment
+    suggestedAction: Parser, executor, branch tracking, gate system, confidence-based depth
+    rank: 3
+    status: pending
+    createdAt: '2026-04-17T22:47:28.721Z'
+    updatedAt: '2026-04-17T22:47:28.721Z'
+  - id: agent-task-execution-api
+    title: Implement Agent Coordination & Task API
+    reason: First-class agent citizens; enables speculative execution & gates
+    justification: Rank 4 - depends on workflow engine; unblocks agent operations tasks
+    suggestedAction: Async task definition, state machine, notifications, confirmations
+    rank: 4
+    status: pending
+    createdAt: '2026-04-17T22:47:28.721Z'
+    updatedAt: '2026-04-17T22:47:28.721Z'
+  - id: operations-monitoring
+    title: Add Logging, Metrics, Dashboards
+    reason: Essential for production reliability and performance optimization
+    justification: Rank 5 - depends on core features; non-blocking but pre-prod critical
+    suggestedAction: Structured logging, metrics collection, real-time operation dashboards
+    rank: 5
+    status: pending
+    createdAt: '2026-04-17T22:47:28.721Z'
+    updatedAt: '2026-04-17T22:47:28.721Z'
