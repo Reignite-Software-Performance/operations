@@ -1,51 +1,54 @@
 level: project
-generatedAt: '2026-04-17T22:47:28.721Z'
+generatedAt: '2026-04-19T19:38:10.063Z'
 model: haiku
 items:
-  - id: core-data-entities
-    title: Define Core Operations Data Model
-    reason: >-
-      Foundational; all features depend on consistent business entity
-      definitions
-    justification: Rank 1 - must precede all integration and workflow work
-    suggestedAction: Build entities for orders, inventory, workflows, agents; use DDD
+  - id: operations-data-models
+    title: Operations Data Models & Schema
+    reason: No operations execute without structured data representations
+    justification: Foundational blocking dependency for all workflows
+    suggestedAction: Define schema for workflow instances, tasks, assignments
     rank: 1
     status: pending
-    createdAt: '2026-04-17T22:47:28.721Z'
-    updatedAt: '2026-04-17T22:47:28.721Z'
-  - id: saas-integration-framework
-    title: Create Integration Adapter Pattern & Base
-    reason: Unblocks parallel SaaS connector development (accounting, CRM, etc.)
-    justification: Rank 2 - depends on data model; critical for operations scope
-    suggestedAction: Pattern for auth, retry, rate-limit, error handling, state sync
+    timeframe: today
+    createdAt: '2026-04-19T19:38:10.063Z'
+    updatedAt: '2026-04-19T19:38:10.063Z'
+  - id: operations-orchestration-engine
+    title: Core Workflow Orchestration Engine
+    reason: Central runtime for executing operational workflows
+    justification: Blocks all downstream agent workflows and coordination
+    suggestedAction: Implement process parser and async execution runtime
     rank: 2
     status: pending
-    createdAt: '2026-04-17T22:47:28.721Z'
-    updatedAt: '2026-04-17T22:47:28.721Z'
-  - id: workflow-orchestration-engine
-    title: Build Workflow Engine with Act-First Support
-    reason: Core to Automaton's act-first design; enables agent orchestration
-    justification: Rank 3 - depends on data model; blocks agent team deployment
-    suggestedAction: Parser, executor, branch tracking, gate system, confidence-based depth
+    timeframe: today
+    createdAt: '2026-04-19T19:38:10.063Z'
+    updatedAt: '2026-04-19T19:38:10.063Z'
+  - id: operations-agent-interface
+    title: Agent Integration & Communication Layer
+    reason: Agents cannot submit or monitor operations without this
+    justification: Critical bridge between agents and orchestration layer
+    suggestedAction: Build gRPC/HTTP contract for agent task enqueuing
     rank: 3
     status: pending
-    createdAt: '2026-04-17T22:47:28.721Z'
-    updatedAt: '2026-04-17T22:47:28.721Z'
-  - id: agent-task-execution-api
-    title: Implement Agent Coordination & Task API
-    reason: First-class agent citizens; enables speculative execution & gates
-    justification: Rank 4 - depends on workflow engine; unblocks agent operations tasks
-    suggestedAction: Async task definition, state machine, notifications, confirmations
+    timeframe: today
+    createdAt: '2026-04-19T19:38:10.063Z'
+    updatedAt: '2026-04-19T19:38:10.063Z'
+  - id: operations-observability
+    title: Logging, Metrics & Audit Infrastructure
+    reason: Must observe operations for debugging and autonomous improvement
+    justification: Production reliability and compliance require full visibility
+    suggestedAction: Add structured logging and metrics collection system
     rank: 4
     status: pending
-    createdAt: '2026-04-17T22:47:28.721Z'
-    updatedAt: '2026-04-17T22:47:28.721Z'
-  - id: operations-monitoring
-    title: Add Logging, Metrics, Dashboards
-    reason: Essential for production reliability and performance optimization
-    justification: Rank 5 - depends on core features; non-blocking but pre-prod critical
-    suggestedAction: Structured logging, metrics collection, real-time operation dashboards
+    timeframe: today
+    createdAt: '2026-04-19T19:38:10.063Z'
+    updatedAt: '2026-04-19T19:38:10.063Z'
+  - id: operations-testing-framework
+    title: Comprehensive Testing Infrastructure
+    reason: Prevents regression in complex orchestration logic
+    justification: High-quality tests enable confident refactoring
+    suggestedAction: Set up xUnit with mock agents and workflow simulators
     rank: 5
     status: pending
-    createdAt: '2026-04-17T22:47:28.721Z'
-    updatedAt: '2026-04-17T22:47:28.721Z'
+    timeframe: today
+    createdAt: '2026-04-19T19:38:10.063Z'
+    updatedAt: '2026-04-19T19:38:10.063Z'
