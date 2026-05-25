@@ -2,3 +2,11 @@
 # Generated content + downloaded/uploaded assets (operator-local; promote explicitly when needed)
 content/
 assets/
+
+# Automaton runtime files (auto-added by automaton)
+# Automaton turn-limit resume marker — ephemeral, must not be tracked (v0.33.37)
+.code-continue.yaml
+# Feature tick-frequency mutations — gitignored so per-run state never generates commit churn (v0.32.0)
+features/**/*.mutate.yaml
+# Task tick-frequency mutations — same partition as features (v0.32.0)
+tasks/**/*.mutate.yaml
