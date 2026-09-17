@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-3
+project: operations
+title: Send group notification when a new issue is created
+description: No notification path exists for new issues. The objective requires the group be notified with the signature, frequency, onset time, and a tracker link.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, create an IIssueNotifier interface and a concrete implementation (e.g. GroupNotifier using an existing notification/messaging channel — email, webhook, or message-bus — or a pluggable adapter if none exists yet). When IngestSignature returns 'new', call IIssueNotifier.NotifyNewIssue with a payload containing: (a) the signature text, (b) current occurrence count, (c) FirstSeenUtc (onset), (d) the deterministic tracker URL (/tracker/{fingerprint}). The notification message must be human-readable and include all four data points. If no real channel is configured, implement a logging-based fallback that writes the structured payload at Info level. Acceptance criteria: (1) creating a new issue via ingestion triggers exactly one notification containing signature, count, onset, and URL; (2) ingesting an already-tracked fingerprint does NOT trigger a new-issue notification; (3) integration test asserts notification payload shape and content; (4) the notifier is registered via DI so it can be swapped.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Satisfies milestone 3 (new issues notify the group with signature, frequency, onset, tracker link).
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code
