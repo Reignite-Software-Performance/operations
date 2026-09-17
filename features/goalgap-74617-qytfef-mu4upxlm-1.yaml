@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-1
+project: operations
+title: Add tracker API endpoints with deterministic route
+description: No tracker surface exists. The objective requires a tab/view backed by API endpoints at a deterministic, fingerprint-derived route so issues are linkable.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, add a TrackerController (or equivalent minimal-API group) exposing: GET /tracker — lists all issues (supports filtering by State); GET /tracker/{fingerprint} — returns a single issue by its deterministic fingerprint-based ID; PATCH /tracker/{fingerprint}/state — transitions the issue's lifecycle state (delegates to the lifecycle service). The route must be deterministic: given the same fingerprint the URL is always the same. Return JSON representations including all entity fields, current state, occurrence count, first/last seen, and linked remediation. Acceptance criteria: (1) GET /tracker returns issues filterable by state query param; (2) GET /tracker/{fingerprint} returns 200 for an existing issue, 404 otherwise; (3) PATCH …/state transitions the state and returns the updated issue; (4) integration tests prove the route is stable across restarts for the same fingerprint.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Completes milestone 1 (tracker tab with a deterministic route) and provides the link used in notifications (milestone 3).
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code
