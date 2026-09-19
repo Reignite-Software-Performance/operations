@@ -64,12 +64,10 @@ prompt: |
   Filed by the error-to-feature ingestion pipeline from `build-status:935c60a825e2cae2`.
   A recurrence of this same signature reuses this feature rather than filing
   another, so occurrence counts here may lag the live total.
-status: queued
 cost:
   estimatedCost: 2
   estimatedLines: 200
 created: '2026-09-13T17:21:04.479Z'
-updated: '2026-09-13T17:21:04.479Z'
 action: code
 revenueImpactUSD: 0
 goalId: goal-1789335574571-8tw3iy
