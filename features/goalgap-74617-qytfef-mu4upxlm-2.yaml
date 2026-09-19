@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-2
+project: operations
+title: Implement fingerprint-based deduplication on ingestion
+description: Nothing currently deduplicates incoming signatures against existing issues. The objective requires that an incoming event is matched by fingerprint to decide already-tracked vs new.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, create an IssueIngestionService (or extend the existing ingestion path that produced the build-failed work item) with a method IngestSignature(string signature, string fingerprint, DateTime occurredUtc). Logic: (1) query persisted Issues by fingerprint; (2) if a match exists, increment its OccurrenceCount, update LastSeenUtc, and return a result indicating 'already-tracked'; (3) if no match, create a new Issue in state New with OccurrenceCount=1, FirstSeenUtc=occurredUtc, and return 'new'. Acceptance criteria: (1) first ingestion of a fingerprint creates a New issue; (2) second ingestion of the same fingerprint increments OccurrenceCount and does not create a duplicate; (3) two different fingerprints produce two distinct issues; (4) unit tests cover all three scenarios.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Satisfies milestone 2 (fingerprint dedupe decides already-tracked vs new).
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code

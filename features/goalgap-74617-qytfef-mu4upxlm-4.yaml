@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-4
+project: operations
+title: Monitor recurrence and link remediation to issue
+description: No mechanism links a remediation feature/task to an issue or monitors whether its signature recurs after resolution. The objective requires the resolution loop.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, add: (1) a PATCH /tracker/{fingerprint}/remediation endpoint that accepts a remediationId (string, referencing an existing feature or task) and stores it on the Issue's LinkedRemediationId field; (2) extend IngestSignature so that when a signature arrives whose matching Issue is in state Resolved, the issue is transitioned back to New (regression) via the lifecycle service; (3) when a regression transition occurs, call IIssueNotifier.NotifyRegression with the same payload shape as new-issue plus a flag indicating regression. Acceptance criteria: (1) linking a remediation ID persists on the issue and is returned in GET; (2) ingesting a fingerprint for a Resolved issue reopens it to New; (3) regression triggers a notification distinct from new-issue; (4) ingesting a fingerprint for an issue in Verified also reopens; (5) unit/integration tests cover link, reopen, and regression-notification paths.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Satisfies the first half of milestone 4 (recurrence monitoring and remediation linking).
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code
