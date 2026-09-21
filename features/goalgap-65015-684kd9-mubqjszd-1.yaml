@@ -1,0 +1,20 @@
+id: goalgap-65015-684kd9-mubqjszd-1
+project: operations
+title: Post-provision endpoint probe rejects placeholder and directory-listing response
+description: After an App Service is provisioned or deployed, nothing verifies it serves real application content. Placeholder pages and IIS directory listings go undetected.
+dependsOn: []
+prompt: |
+  In the operations backend, add a post-provision verification step (src/Provisioning/EndpointProbe.cs or equivalent) that runs after any App Service create or deploy operation. The probe must: (1) issue an HTTP GET to the app's default hostname over HTTPS; (2) fail with a descriptive ProvisioningResult.Failed if the response matches any of: Azure/IIS default placeholder page (detect by known title strings 'Hey, App Service developers!' or 'Microsoft Azure App Service'), IIS directory listing (detect '<pre>' with href-based file listing and title 'Index of'), HTTP 404/500/503 with default body, or connection refused/timeout after 60s with 3 retries; (3) succeed only when the response is 200-299 with a body that does not match any placeholder signature. The probe must be wired into the provisioning pipeline so it cannot be skipped. Write unit tests with canned HTML fixtures for each placeholder pattern and one valid application response. Acceptance criteria: (a) deploying a real app produces ProvisioningResult.Verified with evidence containing status code and body-hash; (b) deploying to an empty app slot produces ProvisioningResult.Failed naming the placeholder pattern matched; (c) unit tests cover all five rejection patterns.
+
+  ## Objective this serves
+  Provisioning truthfulness
+
+  Directly addresses 'an app that serves a placeholder' and 'a deploy that ships a directory listing'.
+goalId: goal-1789851065015-684kd9
+created: '2026-09-21T21:06:42.169Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: e1e16ffcde3a9d6e32810093f8e210e2
+action: code
