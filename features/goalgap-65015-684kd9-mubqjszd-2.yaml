@@ -1,0 +1,20 @@
+id: goalgap-65015-684kd9-mubqjszd-2
+project: operations
+title: Read-back validation for app settings and connection strings after write
+description: Settings writes can be silently discarded or truncated by the platform. Nothing reads them back to confirm they were persisted as intended.
+dependsOn: []
+prompt: |
+  In the operations backend, add a settings verification step (src/Provisioning/SettingsVerifier.cs or equivalent) that runs immediately after any App Service app-settings or connection-string write (ARM PUT or Azure SDK equivalent). The step must: (1) re-read the settings from the resource via a fresh GET; (2) compare every key-value pair that was written against what was read back; (3) return ProvisioningResult.Failed listing each discrepancy (missing key, value mismatch with expected-vs-actual, truncated value) if any setting does not round-trip; (4) return ProvisioningResult.Verified with VerificationEvidence listing the count of settings confirmed and the comparison timestamp on full match. Handle the special case where ARM returns masked values for connection strings by verifying at minimum that the key exists and the value length matches. Wire this into every code path that writes settings so it cannot be bypassed. Write unit tests with a mock ARM client that simulates: all settings persisted, one key silently dropped, one value truncated. Acceptance criteria: (a) a successful write round-trips all settings and returns Verified; (b) a dropped setting returns Failed naming the missing key; (c) a truncated value returns Failed showing expected vs actual length.
+
+  ## Objective this serves
+  Provisioning truthfulness
+
+  Directly addresses 'settings silently discarded'.
+goalId: goal-1789851065015-684kd9
+created: '2026-09-21T21:06:42.169Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: e1e16ffcde3a9d6e32810093f8e210e2
+action: code
