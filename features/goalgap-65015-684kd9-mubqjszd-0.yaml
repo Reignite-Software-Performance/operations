@@ -1,0 +1,20 @@
+id: goalgap-65015-684kd9-mubqjszd-0
+project: operations
+title: Introduce ProvisioningResult contract that forbids silent false-success
+description: No structured result type forces provisioning methods to carry either a verified-resource reference or an explicit failure. Void/bool returns let false success propagate undetected.
+dependsOn: []
+prompt: |
+  In the operations C#/.NET backend, create a `ProvisioningResult<T>` type (src/Models/ProvisioningResult.cs or equivalent) that is a discriminated union of Verified(T resource, VerificationEvidence evidence) and Failed(string reason, Exception? inner). VerificationEvidence must include the check performed, the timestamp, and the observed value. All public provisioning methods in the codebase must return ProvisioningResult<T> instead of void, bool, or bare resource objects. Add a Roslyn analyzer rule or an architectural test (ArchUnitNET or reflection-based) that fails the build if any public method in a class whose name contains 'Provisioner', 'Provisioning', or 'Deploy' returns void, bool, or a bare resource type. Acceptance criteria: (1) ProvisioningResult<T> exists with the described shape; (2) all existing provisioning methods are migrated to return it; (3) the architectural test passes in CI and fails when a void-returning provisioning method is added.
+
+  ## Objective this serves
+  Provisioning truthfulness
+
+  Eliminates the root pattern behind every failure mode the objective describes: reporting done without evidence.
+goalId: goal-1789851065015-684kd9
+created: '2026-09-21T21:06:42.169Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: e1e16ffcde3a9d6e32810093f8e210e2
+action: code
