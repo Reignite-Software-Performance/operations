@@ -1,0 +1,20 @@
+id: goalgap-65015-684kd9-mubqjszd-4
+project: operations
+title: Guard 'already exists' provisioning paths with state validation
+description: When a provisioning operation finds that a resource already exists, it treats existence as success without verifying the resource's state matches intent. This masks failed or partial prior provisions.
+dependsOn: []
+prompt: |
+  In the operations backend, audit every provisioning code path that catches a 409 Conflict or checks for resource existence before creating. Replace each 'already exists → return success' shortcut with a state-validation gate (src/Provisioning/ExistenceValidator.cs or equivalent). The gate must: (1) retrieve the existing resource's full state; (2) compare the critical properties (SKU/tier, OS, location, app settings count, deployment source, and runtime stack) against the intended provisioning spec; (3) if all critical properties match, return ProvisioningResult.Verified with evidence listing each property checked and its value; (4) if any property diverges, return ProvisioningResult.Failed with a per-property diff (property name, expected value, actual value) and the message 'resource exists but does not match intended state'; (5) never silently accept existence without comparison. Write an architectural test or code-search test that greps for 409/Conflict/exists handling in provisioning classes and fails if any such handler does not invoke ExistenceValidator. Write unit tests simulating: existing resource matching intent, existing resource with wrong SKU, existing resource with wrong OS, existing resource with missing app settings. Acceptance criteria: (a) a matching existing resource returns Verified with property evidence; (b) a divergent resource returns Failed with the property diff; (c) the architectural test catches a new 'already exists → success' shortcut added without validation.
+
+  ## Objective this serves
+  Provisioning truthfulness
+
+  Directly addresses 'a provisioning path that treats already-exists as success' — the most insidious false-success pattern because it looks correct at the call site.
+goalId: goal-1789851065015-684kd9
+created: '2026-09-21T21:06:42.169Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: e1e16ffcde3a9d6e32810093f8e210e2
+action: code
