@@ -1,0 +1,20 @@
+id: goalgap-65015-684kd9-mubqjszd-3
+project: operations
+title: Verify App Service plan association after create and import
+description: Plan associations can be silently dropped or changed during create or import. Nothing confirms the resulting resource is on the intended plan.
+dependsOn: []
+prompt: |
+  In the operations backend, add a plan-association verification step (src/Provisioning/PlanAssociationVerifier.cs or equivalent) that runs after any App Service create, move, or import operation. The step must: (1) read the resulting App Service resource and extract its serverFarmId; (2) compare it to the plan ID that was specified in the provisioning request; (3) return ProvisioningResult.Failed with both the expected and actual plan IDs if they differ or if serverFarmId is null/empty; (4) additionally verify the plan's SKU tier and OS (Linux vs Windows) match intent, leveraging the azure-app-service-linux-default principle — if the plan resolved to Windows without a recorded env approve-windows-plan approval, fail with a message naming the resource and the unexpected OS; (5) return ProvisioningResult.Verified with evidence including the confirmed plan ID, SKU, and OS. Wire into every App Service provisioning path. Write unit tests with a mock ARM client simulating: correct association, dropped association (null serverFarmId), wrong plan ID, and unexpected Windows OS. Acceptance criteria: (a) correct plan returns Verified; (b) null serverFarmId returns Failed; (c) wrong plan ID returns Failed with both IDs; (d) unapproved Windows plan returns Failed naming the resource and OS mismatch.
+
+  ## Objective this serves
+  Provisioning truthfulness
+
+  Directly addresses 'a plan association dropped on import' and reinforces the azure-app-service-linux-default operating principle.
+goalId: goal-1789851065015-684kd9
+created: '2026-09-21T21:06:42.169Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: e1e16ffcde3a9d6e32810093f8e210e2
+action: code
