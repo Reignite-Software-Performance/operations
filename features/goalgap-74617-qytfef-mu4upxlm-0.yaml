@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-0
+project: operations
+title: Implement Issue entity with lifecycle state machine
+description: No Issue entity exists yet. The objective requires a distinct Issue model with a five-state lifecycle (new → triaged → acknowledged → resolved → verified) and persisted state transitions.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, create an Issue entity (separate from any existing Feature or Task models) with at minimum: Id (deterministic, derived from fingerprint), Fingerprint (string), Signature (string), State (enum: New, Triaged, Acknowledged, Resolved, Verified), OccurrenceCount (int), FirstSeenUtc (DateTime), LastSeenUtc (DateTime), LinkedRemediationId (nullable, references a feature/task), and timestamp fields for each state transition. Implement a state-machine service (IssueLifecycleService or similar) that enforces the allowed transitions: New→Triaged, Triaged→Acknowledged, Acknowledged→Resolved, Resolved→Verified, plus Resolved→New for regressions. Persist via the project's existing data-access pattern (EF Core or equivalent). Acceptance criteria: (1) Issue entity is persisted with all listed fields; (2) valid transitions succeed and update the corresponding timestamp; (3) invalid transitions (e.g. New→Verified) throw or return an error; (4) unit tests cover every valid transition and at least two invalid ones.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Unblocks milestone 1 (Issue entity + lifecycle) and is the foundation every other milestone depends on.
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code

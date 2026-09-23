@@ -1,0 +1,22 @@
+id: goalgap-74617-qytfef-mu4upxlm-5
+project: operations
+title: Auto-verify resolved issues when signature stops recurring
+description: There is no automated closure path. The objective requires an issue to close as verified only when its signature stops occurring, completing e2e ownership.
+dependsOn: []
+prompt: |
+  In the operations dotnet/csharp backend, implement a background job or hosted service (IHostedService / BackgroundService) named IssueVerificationJob that runs on a configurable interval (default: every 1 hour, configurable via appsettings 'IssueVerification:IntervalMinutes'). Logic: (1) query all Issues in state Resolved; (2) for each, check whether LastSeenUtc is older than a configurable quiet period (default: 72 hours, configurable via 'IssueVerification:QuietPeriodHours'); (3) if the quiet period has elapsed with no new occurrences, transition the issue to Verified via the lifecycle service; (4) log each auto-verification at Info level. Acceptance criteria: (1) a Resolved issue whose LastSeenUtc is older than the quiet period is transitioned to Verified on the next run; (2) a Resolved issue with a recent LastSeenUtc is NOT transitioned; (3) the interval and quiet period are read from configuration; (4) unit test with a fake clock proves both paths; (5) an issue that regresses (recurrence ingested) before verification is not verified.
+
+  ## Objective this serves
+  Issue tracker — lifecycle, notification & resolution ownership
+
+  Completes milestone 4 (closes as verified only when signature stops occurring) and delivers the e2e ownership loop with minimal manual intervention.
+status: backlog
+goalId: goal-1789335574617-qytfef
+created: '2026-09-17T01:29:03.322Z'
+updated: '2026-09-17T01:29:03.322Z'
+provenance:
+  source: goal-gap-derivation
+  method: model-inference
+  evaluatorVersion: opus
+  inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
+action: code
