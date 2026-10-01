@@ -10,10 +10,8 @@ prompt: |
   Issue tracker — lifecycle, notification & resolution ownership
 
   Completes milestone 4 (closes as verified only when signature stops occurring) and delivers the e2e ownership loop with minimal manual intervention.
-status: backlog
-goalId: goal-1789335574617-qytfef
+goalId: issue-tracker-lifecycle-notification-resolution-ownership
 created: '2026-09-17T01:29:03.322Z'
-updated: '2026-09-17T01:29:03.322Z'
 provenance:
   source: goal-gap-derivation
   method: model-inference
