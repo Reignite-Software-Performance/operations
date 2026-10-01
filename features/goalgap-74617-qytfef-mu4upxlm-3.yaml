@@ -10,10 +10,8 @@ prompt: |
   Issue tracker — lifecycle, notification & resolution ownership
 
   Satisfies milestone 3 (new issues notify the group with signature, frequency, onset, tracker link).
-status: backlog
-goalId: goal-1789335574617-qytfef
+goalId: issue-tracker-lifecycle-notification-resolution-ownership
 created: '2026-09-17T01:29:03.322Z'
-updated: '2026-09-17T01:29:03.322Z'
 provenance:
   source: goal-gap-derivation
   method: model-inference
