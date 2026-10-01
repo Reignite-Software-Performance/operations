@@ -10,10 +10,8 @@ prompt: |
   Issue tracker — lifecycle, notification & resolution ownership
 
   Unblocks milestone 1 (Issue entity + lifecycle) and is the foundation every other milestone depends on.
-status: backlog
-goalId: goal-1789335574617-qytfef
+goalId: issue-tracker-lifecycle-notification-resolution-ownership
 created: '2026-09-17T01:29:03.322Z'
-updated: '2026-09-17T01:29:03.322Z'
 provenance:
   source: goal-gap-derivation
   method: model-inference
