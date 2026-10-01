@@ -73,7 +73,7 @@ cost:
 created: '2026-09-13T17:21:04.479Z'
 action: code
 revenueImpactUSD: 0
-goalId: goal-1789335574571-8tw3iy
+goalId: issue-tracker-server-event-correlation-kql-signature-analysi
 branch: feat/errfix-build-failed-6f607a64da64
 prUrl: https://github.com/Reignite-Software-Performance/operations/pull/1
 implementation:
