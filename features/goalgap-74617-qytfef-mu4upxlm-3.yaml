@@ -24,3 +24,17 @@ cost:
   actualTokens: 501440
   actualCost: 2.2976
   actualLines: 1844
+derivedTags:
+  status: derived
+  tags: &ref_0
+    - action:code
+    - goal:issue-tracker-lifecycle-notification-resolution-ownership
+  provenance:
+    - tag: action:code
+      source: action
+      evidence: action=code
+    - tag: goal:issue-tracker-lifecycle-notification-resolution-ownership
+      source: goalId
+      evidence: goalId=issue-tracker-lifecycle-notification-resolution-ownership
+  derivedAt: '2026-10-04T18:59:56.609Z'
+tags: *ref_0
