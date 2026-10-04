@@ -18,3 +18,9 @@ provenance:
   evaluatorVersion: opus
   inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
 action: code
+branch: feat/goalgap-74617-qytfef-mu4upxlm-2
+prUrl: https://github.com/Reignite-Software-Performance/operations/pull/3
+cost:
+  actualTokens: 366062
+  actualCost: 1.0813
+  actualLines: 919
