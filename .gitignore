@@ -11,6 +11,10 @@ features/**/*.mutate.yaml
 # Task tick-frequency mutations — same partition as features (v0.32.0)
 tasks/**/*.mutate.yaml
 
+# .NET build output
+[Bb]in/
+[Oo]bj/
+
 # Common noise (auto-added by automaton)
 # Windows-bash `> nul` redirect creates literal file named 'nul'
 nul
