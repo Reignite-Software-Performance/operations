@@ -18,3 +18,21 @@ provenance:
   evaluatorVersion: opus
   inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
 action: code
+derivedTags:
+  status: derived
+  tags: &ref_0
+    - action:code
+    - class:docs-only
+    - goal:issue-tracker-lifecycle-notification-resolution-ownership
+  provenance:
+    - tag: action:code
+      source: action
+      evidence: action=code
+    - tag: class:docs-only
+      source: mergeClass
+      evidence: every changed path (12) is docs/features prose
+    - tag: goal:issue-tracker-lifecycle-notification-resolution-ownership
+      source: goalId
+      evidence: goalId=issue-tracker-lifecycle-notification-resolution-ownership
+  derivedAt: '2026-10-04T19:23:13.684Z'
+tags: *ref_0
