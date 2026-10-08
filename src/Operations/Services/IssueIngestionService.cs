@@ -9,6 +9,8 @@ namespace Operations.Services;
 /// </summary>
 public sealed class IssueIngestionService
 {
+    private const int MaxConcurrencyAttempts = 5;
+
     private readonly OperationsDbContext _db;
 
     public IssueIngestionService(OperationsDbContext db)
@@ -33,9 +35,7 @@ public sealed class IssueIngestionService
         var existing = await FindByFingerprint(fingerprint, cancellationToken).ConfigureAwait(false);
         if (existing is not null)
         {
-            existing.RecordOccurrence(occurredUtc);
-            await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            return IssueIngestionResult.AlreadyTracked(existing);
+            return await RecordOccurrenceOnExisting(existing, occurredUtc, cancellationToken).ConfigureAwait(false);
         }
 
         var issue = Issue.CreateNew(signature, fingerprint, occurredUtc);
@@ -59,9 +59,35 @@ public sealed class IssueIngestionService
                 throw;
             }
 
-            winner.RecordOccurrence(occurredUtc);
-            await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
-            return IssueIngestionResult.AlreadyTracked(winner);
+            return await RecordOccurrenceOnExisting(winner, occurredUtc, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    /// Increments the occurrence count on an already-tracked issue. The increment is a
+    /// read-modify-write, so it is guarded by the <c>OccurrenceCount</c> concurrency token:
+    /// if a concurrent ingestion advanced the row first the save conflicts, and we reload
+    /// and re-apply the increment rather than losing it.
+    /// </summary>
+    private async Task<IssueIngestionResult> RecordOccurrenceOnExisting(
+        Issue issue,
+        DateTime occurredUtc,
+        CancellationToken cancellationToken)
+    {
+        for (var attempt = 0; ; attempt++)
+        {
+            issue.RecordOccurrence(occurredUtc);
+
+            try
+            {
+                await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+                return IssueIngestionResult.AlreadyTracked(issue);
+            }
+            catch (DbUpdateConcurrencyException) when (attempt < MaxConcurrencyAttempts)
+            {
+                // Another writer won the race: refresh our copy from the store and retry.
+                await _db.Entry(issue).ReloadAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
     }
 

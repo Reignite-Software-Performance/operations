@@ -9,6 +9,20 @@ namespace Operations.Models;
 /// </summary>
 public sealed class Issue
 {
+    /// <summary>
+    /// The allowed transitions of the lifecycle state machine:
+    /// New → Triaged → Acknowledged → Resolved → Verified, plus Resolved → New for regressions.
+    /// </summary>
+    private static readonly IReadOnlyDictionary<IssueState, IssueState[]> AllowedTransitions =
+        new Dictionary<IssueState, IssueState[]>
+        {
+            [IssueState.New] = new[] { IssueState.Triaged },
+            [IssueState.Triaged] = new[] { IssueState.Acknowledged },
+            [IssueState.Acknowledged] = new[] { IssueState.Resolved },
+            [IssueState.Resolved] = new[] { IssueState.Verified, IssueState.New },
+            [IssueState.Verified] = Array.Empty<IssueState>(),
+        };
+
     /// <summary>Deterministic identifier derived from <see cref="Fingerprint"/>.</summary>
     public Guid Id { get; private set; }
 
@@ -28,6 +42,18 @@ public sealed class Issue
 
     /// <summary>Optional reference to the feature/task that remediates this issue.</summary>
     public string? LinkedRemediationId { get; private set; }
+
+    /// <summary>When the issue entered <see cref="IssueState.Triaged"/>, if it ever has.</summary>
+    public DateTime? TriagedAtUtc { get; private set; }
+
+    /// <summary>When the issue entered <see cref="IssueState.Acknowledged"/>, if it ever has.</summary>
+    public DateTime? AcknowledgedAtUtc { get; private set; }
+
+    /// <summary>When the issue entered <see cref="IssueState.Resolved"/>, if it ever has.</summary>
+    public DateTime? ResolvedAtUtc { get; private set; }
+
+    /// <summary>When the issue entered <see cref="IssueState.Verified"/>, if it ever has.</summary>
+    public DateTime? VerifiedAtUtc { get; private set; }
 
     public DateTime CreatedUtc { get; private set; }
 
@@ -64,14 +90,71 @@ public sealed class Issue
 
     /// <summary>
     /// Records a further occurrence of the same fingerprint. <see cref="FirstSeenUtc"/> is preserved;
-    /// <see cref="LastSeenUtc"/> and <see cref="UpdatedUtc"/> advance to the new event time.
+    /// <see cref="LastSeenUtc"/> and <see cref="UpdatedUtc"/> only ever move forward, so an
+    /// out-of-order (older) event cannot rewind them.
     /// </summary>
     public void RecordOccurrence(DateTime occurredUtc)
     {
         var occurred = UtcTimestamps.Normalize(occurredUtc);
         OccurrenceCount++;
-        LastSeenUtc = occurred;
-        UpdatedUtc = occurred;
+
+        if (occurred > LastSeenUtc)
+        {
+            LastSeenUtc = occurred;
+        }
+
+        if (occurred > UpdatedUtc)
+        {
+            UpdatedUtc = occurred;
+        }
+    }
+
+    /// <summary>
+    /// Transitions the issue to <paramref name="targetState"/> if that move is permitted by the
+    /// lifecycle state machine (New → Triaged → Acknowledged → Resolved → Verified, plus
+    /// Resolved → New for regressions) and stamps the matching transition timestamp.
+    /// </summary>
+    /// <exception cref="InvalidIssueTransitionException">
+    /// Thrown when <paramref name="targetState"/> is not reachable from the current state.
+    /// </exception>
+    public void TransitionTo(IssueState targetState, DateTime occurredUtc)
+    {
+        if (!AllowedTransitions.TryGetValue(State, out var allowedTargets) || !allowedTargets.Contains(targetState))
+        {
+            throw new InvalidIssueTransitionException(State, targetState);
+        }
+
+        var occurred = UtcTimestamps.Normalize(occurredUtc);
+        State = targetState;
+
+        switch (targetState)
+        {
+            case IssueState.Triaged:
+                TriagedAtUtc = occurred;
+                break;
+            case IssueState.Acknowledged:
+                AcknowledgedAtUtc = occurred;
+                break;
+            case IssueState.Resolved:
+                ResolvedAtUtc = occurred;
+                break;
+            case IssueState.Verified:
+                VerifiedAtUtc = occurred;
+                break;
+            case IssueState.New:
+                // Regression: reopen the issue and clear downstream timestamps so the
+                // next pass through the lifecycle records fresh ones.
+                TriagedAtUtc = null;
+                AcknowledgedAtUtc = null;
+                ResolvedAtUtc = null;
+                VerifiedAtUtc = null;
+                break;
+        }
+
+        if (occurred > UpdatedUtc)
+        {
+            UpdatedUtc = occurred;
+        }
     }
 
     /// <summary>Derives a stable <see cref="Guid"/> from a fingerprint.</summary>
