@@ -36,3 +36,5 @@ derivedTags:
       evidence: goalId=issue-tracker-lifecycle-notification-resolution-ownership
   derivedAt: '2026-10-04T19:23:13.077Z'
 tags: *ref_0
+implementation:
+  state: landed
