@@ -10,13 +10,31 @@ prompt: |
   Issue tracker — lifecycle, notification & resolution ownership
 
   Satisfies milestone 3 (new issues notify the group with signature, frequency, onset, tracker link).
-status: backlog
-goalId: goal-1789335574617-qytfef
+goalId: issue-tracker-lifecycle-notification-resolution-ownership
 created: '2026-09-17T01:29:03.322Z'
-updated: '2026-09-17T01:29:03.322Z'
 provenance:
   source: goal-gap-derivation
   method: model-inference
   evaluatorVersion: opus
   inputFingerprint: 8b2368be5ed05c8a25d07620080439c6
 action: code
+branch: feat/goalgap-74617-qytfef-mu4upxlm-3
+prUrl: https://github.com/Reignite-Software-Performance/operations/pull/4
+cost:
+  actualTokens: 501440
+  actualCost: 2.2976
+  actualLines: 1844
+derivedTags:
+  status: derived
+  tags: &ref_0
+    - action:code
+    - goal:issue-tracker-lifecycle-notification-resolution-ownership
+  provenance:
+    - tag: action:code
+      source: action
+      evidence: action=code
+    - tag: goal:issue-tracker-lifecycle-notification-resolution-ownership
+      source: goalId
+      evidence: goalId=issue-tracker-lifecycle-notification-resolution-ownership
+  derivedAt: '2026-10-04T18:59:56.609Z'
+tags: *ref_0

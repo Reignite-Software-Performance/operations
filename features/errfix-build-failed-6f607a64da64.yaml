@@ -73,6 +73,26 @@ cost:
 created: '2026-09-13T17:21:04.479Z'
 action: code
 revenueImpactUSD: 0
-goalId: goal-1789335574571-8tw3iy
+goalId: issue-tracker-server-event-correlation-kql-signature-analysi
 branch: feat/errfix-build-failed-6f607a64da64
 prUrl: https://github.com/Reignite-Software-Performance/operations/pull/1
+implementation:
+  state: landed
+derivedTags:
+  status: derived
+  tags: &ref_0
+    - action:code
+    - goal:issue-tracker-server-event-correlation-kql-signature-analysi
+    - kind:fix
+  provenance:
+    - tag: action:code
+      source: action
+      evidence: action=code
+    - tag: goal:issue-tracker-server-event-correlation-kql-signature-analysi
+      source: goalId
+      evidence: goalId=issue-tracker-server-event-correlation-kql-signature-analysi
+    - tag: kind:fix
+      source: kind
+      evidence: kind=fix
+  derivedAt: '2026-10-04T00:43:59.117Z'
+tags: *ref_0

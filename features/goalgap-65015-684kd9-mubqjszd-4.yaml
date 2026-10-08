@@ -10,7 +10,7 @@ prompt: |
   Provisioning truthfulness
 
   Directly addresses 'a provisioning path that treats already-exists as success' — the most insidious false-success pattern because it looks correct at the call site.
-goalId: goal-1789851065015-684kd9
+goalId: provisioning-truthfulness
 created: '2026-09-21T21:06:42.169Z'
 provenance:
   source: goal-gap-derivation
