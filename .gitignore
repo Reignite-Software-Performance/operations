@@ -31,6 +31,14 @@ CODEMAP.json
 # CODEMAP impact metrics — appended per coding run, regenerable
 codemap-metrics.yaml
 
+# .NET build output
+[Bb]in/
+[Oo]bj/
+*.user
+
+# Test results
+[Tt]est[Rr]esult*/
+
 # Automaton runtime files
 .project-lock
 .merge-state.yaml
