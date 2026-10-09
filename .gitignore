@@ -49,3 +49,7 @@ sales/porkbun-credentials.yaml
 .claude/*.lock
 # Test-run capture logs — per-invocation runtime output, not history
 .tests/
+
+# .NET-specific noise (auto-added by automaton)
+# Output of `dotnet publish` — never commit build artifacts
+publish/
