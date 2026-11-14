@@ -67,9 +67,6 @@ prompt: |
 cost:
   estimatedCost: 2
   estimatedLines: 200
-  actualTokens: 35140
-  actualCost: 2.2645
-  actualLines: 499
 created: '2026-09-13T17:21:04.479Z'
 action: code
 revenueImpactUSD: 0
