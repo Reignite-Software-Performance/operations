@@ -20,10 +20,6 @@ provenance:
 action: code
 branch: feat/goalgap-74617-qytfef-mu4upxlm-0
 prUrl: https://github.com/Reignite-Software-Performance/operations/pull/2
-cost:
-  actualTokens: 17264
-  actualCost: 0.5506
-  actualLines: 1055
 derivedTags:
   status: derived
   tags: &ref_0
